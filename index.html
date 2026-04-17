@@ -63,11 +63,33 @@
     position: relative;
     overflow: hidden;
   }
-  .hero-visual svg {
+  .hero-visual img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .hero-visual-overlay {
     position: absolute;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 2.2rem 2.5rem 3rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 70%, transparent 100%);
+    z-index: 2;
+  }
+  .hero-visual-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.55rem;
+    font-weight: 300;
+    color: #e8e2d4;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+  }
+  .hero-visual-title em {
+    font-style: italic;
+    color: #c8b88a;
   }
   .hero-text {
     padding: 5rem 3.5rem 4rem;
@@ -357,89 +379,15 @@
 <!-- HERO -->
 <div class="hero">
   <div class="hero-visual">
-    <svg viewBox="0 0 600 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#080808"/>
-          <stop offset="100%" stop-color="#14120c"/>
-        </linearGradient>
-        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#0c0e16"/>
-          <stop offset="100%" stop-color="#05070e"/>
-        </linearGradient>
-        <linearGradient id="refl" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#c8a85a" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#c8a85a" stop-opacity="0"/>
-        </linearGradient>
-      </defs>
-      <!-- Sky -->
-      <rect width="600" height="700" fill="url(#sky)"/>
-      <!-- Stars / atmosphere -->
-      <circle cx="80" cy="60" r="0.7" fill="#c8b88a" opacity="0.4"/>
-      <circle cx="200" cy="30" r="0.5" fill="#c8b88a" opacity="0.3"/>
-      <circle cx="340" cy="80" r="0.6" fill="#c8b88a" opacity="0.25"/>
-      <circle cx="470" cy="45" r="0.7" fill="#c8b88a" opacity="0.35"/>
-      <circle cx="530" cy="100" r="0.5" fill="#c8b88a" opacity="0.2"/>
-      <circle cx="30" cy="140" r="0.6" fill="#c8b88a" opacity="0.3"/>
-      <!-- North Shore mountains suggestion -->
-      <polygon points="0,300 80,220 150,260 230,190 310,240 380,180 460,230 520,200 600,250 600,320 0,320" fill="#0e0e0c" opacity="0.5"/>
-      <!-- Water -->
-      <rect y="410" width="600" height="290" fill="url(#water)"/>
-      <line x1="0" y1="410" x2="600" y2="410" stroke="#1c1c18" stroke-width="1"/>
-      <!-- Main warehouse structure -->
-      <rect x="50" y="200" width="400" height="220" rx="1" fill="#161610"/>
-      <rect x="50" y="200" width="400" height="7" fill="#1c1a12"/>
-      <!-- Roofline details -->
-      <rect x="100" y="185" width="8" height="20" fill="#1a1812"/>
-      <rect x="200" y="175" width="8" height="30" fill="#1a1812"/>
-      <rect x="340" y="180" width="8" height="25" fill="#1a1812"/>
-      <rect x="420" y="188" width="8" height="17" fill="#1a1812"/>
-      <!-- Windows row 1 -->
-      <rect x="70" y="218" width="72" height="48" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
-      <rect x="158" y="218" width="72" height="48" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
-      <rect x="246" y="218" width="72" height="48" rx="1" fill="#120e00" stroke="#302808" stroke-width="0.5" opacity="0.85"/>
-      <rect x="334" y="218" width="72" height="48" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
-      <!-- Warm window glow - studio light -->
-      <rect x="258" y="226" width="22" height="16" fill="#c8a030" opacity="0.22"/>
-      <rect x="286" y="226" width="22" height="16" fill="#c8a030" opacity="0.14"/>
-      <!-- Dark window reflections -->
-      <rect x="76" y="226" width="22" height="14" fill="#c8a030" opacity="0.04"/>
-      <rect x="368" y="226" width="22" height="14" fill="#c8a030" opacity="0.06"/>
-      <!-- Windows row 2 - lower / larger -->
-      <rect x="70" y="282" width="180" height="100" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
-      <rect x="264" y="282" width="180" height="100" rx="1" fill="#0c0c08" stroke="#222218" stroke-width="0.5"/>
-      <!-- Large window subdivisions -->
-      <line x1="160" y1="282" x2="160" y2="382" stroke="#222218" stroke-width="0.5"/>
-      <line x1="70" y1="332" x2="250" y2="332" stroke="#222218" stroke-width="0.5"/>
-      <line x1="354" y1="282" x2="354" y2="382" stroke="#222218" stroke-width="0.5"/>
-      <line x1="264" y1="332" x2="444" y2="332" stroke="#222218" stroke-width="0.5"/>
-      <!-- Mooring dock platform -->
-      <rect x="30" y="420" width="460" height="14" rx="1" fill="#1a1812"/>
-      <!-- Dock posts -->
-      <line x1="50" y1="434" x2="50" y2="420" stroke="#252318" stroke-width="3"/>
-      <line x1="150" y1="434" x2="150" y2="420" stroke="#252318" stroke-width="3"/>
-      <line x1="260" y1="434" x2="260" y2="420" stroke="#252318" stroke-width="3"/>
-      <line x1="370" y1="434" x2="370" y2="420" stroke="#252318" stroke-width="3"/>
-      <line x1="470" y1="434" x2="470" y2="420" stroke="#252318" stroke-width="3"/>
-      <!-- Float lines in water -->
-      <line x1="160" y1="434" x2="160" y2="700" stroke="#c8a85a" stroke-width="0.5" opacity="0.12"/>
-      <rect x="158" y="434" width="4" height="80" fill="url(#refl)" opacity="0.6"/>
-      <!-- Warm light reflection on water from studio window -->
-      <ellipse cx="302" cy="450" rx="60" ry="20" fill="#c8a030" opacity="0.06"/>
-      <rect x="268" y="434" width="68" height="1" fill="#c8a030" opacity="0.18"/>
-      <!-- Water ripples -->
-      <line x1="0" y1="455" x2="600" y2="455" stroke="#c8a85a" stroke-width="0.5" opacity="0.04"/>
-      <line x1="40" y1="472" x2="400" y2="472" stroke="#c8a85a" stroke-width="0.5" opacity="0.04"/>
-      <line x1="80" y1="490" x2="480" y2="490" stroke="#c8a85a" stroke-width="0.5" opacity="0.03"/>
-      <!-- Mast / flagpole -->
-      <line x1="140" y1="105" x2="140" y2="210" stroke="#252318" stroke-width="1.5"/>
-      <polygon points="140,108 140,128 162,118" fill="#c8a82a" opacity="0.55"/>
-    </svg>
+    <div class="hero-visual-overlay">
+      <div class="hero-visual-title">Cathy de Monchaux at Tide &amp; Current:<br><em>visceral and vital</em></div>
+    </div>
+    <img src="images/cda26_cathy_de_moncheaux_11.jpg" alt="Cathy de Monchaux at Tide &amp; Current">
   </div>
   <div class="hero-text">
     <div class="eyebrow">Bayshore West Marina, Vancouver &mdash; Est. 2025</div>
     <h1>Where the<br>tide shapes<br><em>what endures.</em></h1>
-    <p class="hero-body">A working studio and public arts space on the water in Vancouver's Marina Square district. Residencies, darkroom access, and an open invitation to make something that lasts.</p>
+    <p class="hero-body">A working studio, gallery and public arts space on the water in Vancouver's Marina Square district. Residencies, darkroom access, and an open invitation to make something that lasts.</p>
     <a href="#about" class="btn-ghost">Visit the studio</a>
     <div class="address-tag">
 Bayshore West Marina, Vancouver, BC<br>
@@ -486,7 +434,7 @@ Bayshore West Marina, Vancouver, BC<br>
     <div class="space-card">
       <div class="space-glyph">&#9671;</div>
       <div class="space-name">The Water Room</div>
-      <div class="space-desc">An intimate event and critique space facing the inlet &mdash; floor-to-ceiling glass, a long oak table, seating for eighteen. Available for portfolio reviews, talks, screenings, and private events by inquiry.</div>
+      <div class="space-desc">An intimate gallery, event and critique space facing the inlet &mdash; floor-to-ceiling glass (with full blackout capability), removable tables and seating for eighteen. Available for exhibitions, portfolio reviews, talks, screenings, and private events by inquiry.</div>
     </div>
   </div>
 </section>
