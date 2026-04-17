@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tide &amp; Current — Marina Square, Vancouver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Overpass+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: #111210;
+    color: #d8d3c8;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 3rem;
+    border-bottom: 0.5px solid #2e2d2b;
+    position: sticky;
+    top: 0;
+    background: #111210;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-size: 1.1rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #c8b88a;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: 'Overpass Mono', monospace;
+    font-weight: 300;
+  }
+  .nav-links a {
+    color: #888;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #c8b88a; }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 88vh;
+  }
+  .hero-visual {
+    background: #0d0d0b;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-visual svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .hero-text {
+    padding: 5rem 3.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: #161614;
+    border-left: 0.5px solid #2e2d2b;
+  }
+  .eyebrow {
+    font-family: 'Overpass Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #5a5a52;
+    margin-bottom: 1.5rem;
+  }
+  h1 {
+    font-size: 3.8rem;
+    font-weight: 300;
+    line-height: 1.1;
+    color: #e8e4dc;
+    margin-bottom: 1.4rem;
+  }
+  h1 em { font-style: italic; color: #c8b88a; }
+  .hero-body {
+    font-size: 1.05rem;
+    color: #7a7870;
+    max-width: 38ch;
+    line-height: 1.85;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .btn-ghost {
+    display: inline-block;
+    border: 0.5px solid #3e3d3a;
+    padding: 0.8rem 2.2rem;
+    font-family: 'Overpass Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #c8b88a;
+    cursor: pointer;
+    transition: all 0.25s;
+    width: fit-content;
+  }
+  .btn-ghost:hover { background: #1e1e1a; border-color: #c8b88a; }
+  .address-tag {
+    margin-top: 3rem;
+    font-family: 'Overpass Mono', monospace;
+    font-size: 0.65rem;
+    color: #3e3e38;
+    letter-spacing: 0.15em;
+    border-top: 0.5px solid #2a2a28;
+    padding-top: 1rem;
+    line-height: 1.8;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 3rem; }
+  .section-label {
+    font-family: 'Overpass Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #4e4e48;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: #252522;
+  }
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #e0dbd0;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  h2 em { font-style: italic; color: #c8b88a; }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4.5rem;
+    margin-top: 2.5rem;
+  }
+  .about-body p {
+    font-size: 1.05rem;
+    color: #7a7870;
+    line-height: 1.95;
+    margin-bottom: 1.3rem;
+    font-weight: 300;
+  }
+  .stat-block {
+    border-top: 0.5px solid #252522;
+    padding: 1rem 0;
+    margin-bottom: 0.25rem;
+  }
+  .stat-num {
+    font-size: 2.3rem;
+    font-weight: 300;
+    color: #c8b88a;
+    font-style: italic;
+  }
+  .stat-label {
+    font-family: 'Overpass Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #4e4e48;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* SPACES */
+  .spaces-section { background: #131311; border-top: 0.5px solid #252522; }
+  .spaces-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .space-card {
+    border: 0.5px solid #252522;
+    padding: 2.2rem 1.8rem;
+    transition: border-color 0.25s;
+  }
+  .space-card:hover { border-color: #3a3a34; }
+  .space-glyph {
+    font-size: 1.2rem;
+    margin-bottom: 1.3rem;
+    color: #4e4e44;
+  }
+  .space-name {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #d4cfc4;
+    margin-bottom: 0.6rem;
+  }
+  .space-desc {
+    font-size: 0.92rem;
+    color: #5e5e58;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* TEAM */
+  .team-section {
+    background: #0f0f0d;
+    border-top: 0.5px solid #252522;
+    border-bottom: 0.5px solid #252522;
+  }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 2.5rem;
+    border: 0.5px solid #252522;
+  }
+  .team-card {
+    padding: 2.2rem 1.75rem;
+    border-right: 0.5px solid #252522;
+  }
+  .team-card:last-child { border-right: none; }
+  .team-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #1a1a18;
+    border: 0.5px solid #303028;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #7a7470;
+    margin-bottom: 1.25rem;
+    font-family: 'Overpass Mono', monospace;
+  }
+  .team-name {
+    font-size: 1.1rem;
+    color: #d4cfc4;
+    margin-bottom: 0.2rem;
+    font-weight: 400;
+  }
+  .team-role {
+    font-family: 'Overpass Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #4e4e48;
+    margin-bottom: 0.85rem;
+  }
+  .team-bio {
+    font-size: 0.88rem;
+    color: #5e5e58;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* RESIDENCY */
+  .residency-section {
+    background: #0d0d0b;
+    border-top: 0.5px solid #252522;
+  }
+  .residency-inner { max-width: 680px; }
+  .pull-quote {
+    font-size: 1.9rem;
+    font-style: italic;
+    font-weight: 300;
+    color: #c8b88a;
+    line-height: 1.4;
+    margin: 1.2rem 0 2rem;
+  }
+  .residency-body {
+    font-size: 0.95rem;
+    color: #5e5e58;
+    line-height: 1.85;
+    margin-bottom: 1.3rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 0.5px solid #252522;
+  }
+  .footer-logo {
+    font-size: 0.82rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #323230;
+    font-weight: 300;
+  }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    font-family: 'Overpass Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #323230;
+  }
+  .footer-links a { transition: color 0.2s; }
+  .footer-links a:hover { color: #5e5e58; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.4rem 1.5rem; }
+    .nav-links { gap: 1.5rem; font-size: 0.7rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-visual { height: 40vh; }
+    .hero-text { padding: 3rem 1.5rem 2.5rem; border-left: none; border-top: 0.5px solid #2a2a28; }
+    h1 { font-size: 2.6rem; }
+    section { padding: 3.5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .spaces-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .team-card:nth-child(2) { border-right: none; }
+    .team-card { border-bottom: 0.5px solid #252522; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2rem 1.5rem; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Tide &amp; Current</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#spaces">Spaces</a>
+    <a href="#team">People</a>
+    <a href="#residency">Residency</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-visual">
+    <svg viewBox="0 0 600 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#080808"/>
+          <stop offset="100%" stop-color="#14120c"/>
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0c0e16"/>
+          <stop offset="100%" stop-color="#05070e"/>
+        </linearGradient>
+        <linearGradient id="refl" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c8a85a" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#c8a85a" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Sky -->
+      <rect width="600" height="700" fill="url(#sky)"/>
+      <!-- Stars / atmosphere -->
+      <circle cx="80" cy="60" r="0.7" fill="#c8b88a" opacity="0.4"/>
+      <circle cx="200" cy="30" r="0.5" fill="#c8b88a" opacity="0.3"/>
+      <circle cx="340" cy="80" r="0.6" fill="#c8b88a" opacity="0.25"/>
+      <circle cx="470" cy="45" r="0.7" fill="#c8b88a" opacity="0.35"/>
+      <circle cx="530" cy="100" r="0.5" fill="#c8b88a" opacity="0.2"/>
+      <circle cx="30" cy="140" r="0.6" fill="#c8b88a" opacity="0.3"/>
+      <!-- North Shore mountains suggestion -->
+      <polygon points="0,300 80,220 150,260 230,190 310,240 380,180 460,230 520,200 600,250 600,320 0,320" fill="#0e0e0c" opacity="0.5"/>
+      <!-- Water -->
+      <rect y="410" width="600" height="290" fill="url(#water)"/>
+      <line x1="0" y1="410" x2="600" y2="410" stroke="#1c1c18" stroke-width="1"/>
+      <!-- Main warehouse structure -->
+      <rect x="50" y="200" width="400" height="220" rx="1" fill="#161610"/>
+      <rect x="50" y="200" width="400" height="7" fill="#1c1a12"/>
+      <!-- Roofline details -->
+      <rect x="100" y="185" width="8" height="20" fill="#1a1812"/>
+      <rect x="200" y="175" width="8" height="30" fill="#1a1812"/>
+      <rect x="340" y="180" width="8" height="25" fill="#1a1812"/>
+      <rect x="420" y="188" width="8" height="17" fill="#1a1812"/>
+      <!-- Windows row 1 -->
+      <rect x="70" y="218" width="72" height="48" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
+      <rect x="158" y="218" width="72" height="48" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
+      <rect x="246" y="218" width="72" height="48" rx="1" fill="#120e00" stroke="#302808" stroke-width="0.5" opacity="0.85"/>
+      <rect x="334" y="218" width="72" height="48" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
+      <!-- Warm window glow - studio light -->
+      <rect x="258" y="226" width="22" height="16" fill="#c8a030" opacity="0.22"/>
+      <rect x="286" y="226" width="22" height="16" fill="#c8a030" opacity="0.14"/>
+      <!-- Dark window reflections -->
+      <rect x="76" y="226" width="22" height="14" fill="#c8a030" opacity="0.04"/>
+      <rect x="368" y="226" width="22" height="14" fill="#c8a030" opacity="0.06"/>
+      <!-- Windows row 2 - lower / larger -->
+      <rect x="70" y="282" width="180" height="100" rx="1" fill="#0a0a08" stroke="#222218" stroke-width="0.5"/>
+      <rect x="264" y="282" width="180" height="100" rx="1" fill="#0c0c08" stroke="#222218" stroke-width="0.5"/>
+      <!-- Large window subdivisions -->
+      <line x1="160" y1="282" x2="160" y2="382" stroke="#222218" stroke-width="0.5"/>
+      <line x1="70" y1="332" x2="250" y2="332" stroke="#222218" stroke-width="0.5"/>
+      <line x1="354" y1="282" x2="354" y2="382" stroke="#222218" stroke-width="0.5"/>
+      <line x1="264" y1="332" x2="444" y2="332" stroke="#222218" stroke-width="0.5"/>
+      <!-- Mooring dock platform -->
+      <rect x="30" y="420" width="460" height="14" rx="1" fill="#1a1812"/>
+      <!-- Dock posts -->
+      <line x1="50" y1="434" x2="50" y2="420" stroke="#252318" stroke-width="3"/>
+      <line x1="150" y1="434" x2="150" y2="420" stroke="#252318" stroke-width="3"/>
+      <line x1="260" y1="434" x2="260" y2="420" stroke="#252318" stroke-width="3"/>
+      <line x1="370" y1="434" x2="370" y2="420" stroke="#252318" stroke-width="3"/>
+      <line x1="470" y1="434" x2="470" y2="420" stroke="#252318" stroke-width="3"/>
+      <!-- Float lines in water -->
+      <line x1="160" y1="434" x2="160" y2="700" stroke="#c8a85a" stroke-width="0.5" opacity="0.12"/>
+      <rect x="158" y="434" width="4" height="80" fill="url(#refl)" opacity="0.6"/>
+      <!-- Warm light reflection on water from studio window -->
+      <ellipse cx="302" cy="450" rx="60" ry="20" fill="#c8a030" opacity="0.06"/>
+      <rect x="268" y="434" width="68" height="1" fill="#c8a030" opacity="0.18"/>
+      <!-- Water ripples -->
+      <line x1="0" y1="455" x2="600" y2="455" stroke="#c8a85a" stroke-width="0.5" opacity="0.04"/>
+      <line x1="40" y1="472" x2="400" y2="472" stroke="#c8a85a" stroke-width="0.5" opacity="0.04"/>
+      <line x1="80" y1="490" x2="480" y2="490" stroke="#c8a85a" stroke-width="0.5" opacity="0.03"/>
+      <!-- Mast / flagpole -->
+      <line x1="140" y1="105" x2="140" y2="210" stroke="#252318" stroke-width="1.5"/>
+      <polygon points="140,108 140,128 162,118" fill="#c8a82a" opacity="0.55"/>
+    </svg>
+  </div>
+  <div class="hero-text">
+    <div class="eyebrow">Marina Square, Vancouver &mdash; Est. 2024</div>
+    <h1>Where the<br>tide shapes<br><em>what endures.</em></h1>
+    <p class="hero-body">A working studio and public arts space on the water in Vancouver's Marina Square district. Residencies, darkroom access, and an open invitation to make something that lasts.</p>
+    <a href="#about" class="btn-ghost">Visit the studio</a>
+    <div class="address-tag">
+      Pier 7 &mdash; Marina Square, Vancouver, BC<br>
+      By appointment &amp; scheduled open hours<br>
+      studio@tideandcurrent.ca
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About</div>
+  <h2>A converted warehouse on<br>the docks &mdash; <em>still becoming.</em></h2>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>Tide &amp; Current occupies a former working warehouse at the edge of Marina Square, floating at the intersection of industry and imagination. The building is still in transformation &mdash; we think that's appropriate. The best studios are never quite finished.</p>
+      <p>Founded in 2024 by Rosa Marquez and Max Guest, Tide &amp; Current was conceived as a space for serious work: long-term artist residencies, photographic production, and community programming that resists the ephemeral. We're especially interested in work that takes time.</p>
+      <p>The building retains its industrial bones &mdash; concrete, steel, the smell of salt air through the windows. We've added what was missing: a fully equipped analog darkroom, a large open studio with north light, and the kind of quiet that's increasingly hard to find in a city.</p>
+    </div>
+    <div>
+      <div class="stat-block"><div class="stat-num">4,800</div><div class="stat-label">Square feet of working space</div></div>
+      <div class="stat-block"><div class="stat-num">2</div><div class="stat-label">Artists in residence annually</div></div>
+      <div class="stat-block"><div class="stat-num">1</div><div class="stat-label">Fully analog darkroom</div></div>
+      <div class="stat-block"><div class="stat-num">&#8734;</div><div class="stat-label">Salt air, at no extra charge</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPACES -->
+<section id="spaces" class="spaces-section">
+  <div class="section-label">Spaces</div>
+  <h2>Three rooms. <em>Serious infrastructure.</em></h2>
+  <div class="spaces-grid">
+    <div class="space-card">
+      <div class="space-glyph">&#9672;</div>
+      <div class="space-name">The Open Studio</div>
+      <div class="space-desc">A 2,200 sq ft open-plan workspace with high north-facing clerestory windows and polished concrete floors. Available to resident artists and by arrangement. High ceilings. No distractions.</div>
+    </div>
+    <div class="space-card">
+      <div class="space-glyph">&#9677;</div>
+      <div class="space-name">The Darkroom</div>
+      <div class="space-desc">A fully equipped analog darkroom with enlargers for 35mm and medium format, a film processing suite, and a print drying room. Chemical mixing station. Temperature-controlled water supply. Available by membership and residency.</div>
+    </div>
+    <div class="space-card">
+      <div class="space-glyph">&#9671;</div>
+      <div class="space-name">The Water Room</div>
+      <div class="space-desc">An intimate event and critique space facing the inlet &mdash; floor-to-ceiling glass, a long oak table, seating for eighteen. Available for portfolio reviews, talks, screenings, and private events by inquiry.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="team-section">
+  <div class="section-label">The people</div>
+  <h2>Small by design. <em>Intentional.</em></h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">RM</div>
+      <div class="team-name">Rosa Marquez</div>
+      <div class="team-role">Co-Founder &amp; Director</div>
+      <div class="team-bio">Rosa oversees programming, residency selection, and community partnerships. She has a particular interest in work that spans time and place, and a deep impatience for art that doesn't commit.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">MG</div>
+      <div class="team-name">Max Guest</div>
+      <div class="team-role">Co-Founder &amp; Creative Director</div>
+      <div class="team-bio">Max brings a background in photography and curatorial practice. He designed the building's renovation with close attention to how light moves through industrial space &mdash; and when it should be kept out entirely.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">AJ</div>
+      <div class="team-name">Aria Jones</div>
+      <div class="team-role">Artist in Residence</div>
+      <div class="team-bio">Aria works across textile, installation, and natural pigment. Her practice draws on years spent living and working outside cities, and a restless interest in what materials remember. Currently in her first residency year at Tide &amp; Current.</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">JA</div>
+      <div class="team-name">Joseph Anderson</div>
+      <div class="team-role">Studio Coordinator</div>
+      <div class="team-bio">Joseph manages bookings, digital infrastructure, and the day-to-day logistics that make serious work possible. He comes from a background in enterprise IT and has strong opinions about why smaller is better.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESIDENCY -->
+<section id="residency" class="residency-section">
+  <div class="residency-inner">
+    <div class="section-label">Residency programme</div>
+    <div class="pull-quote">"We're not interested in fast art."</div>
+    <p class="residency-body">Tide &amp; Current offers two annual residencies of six months each, with a small monthly stipend, studio access, darkroom access, and one public presentation at the close of the term. We accept applications in painting, photography, mixed media, textile, and practices that don't fit categories.</p>
+    <p class="residency-body">Applications for the 2025 cycle are now open. We select two artists per year. The application is short. The commitment is real.</p>
+    <a href="#contact" class="btn-ghost">Apply for residency</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-logo">Tide &amp; Current &mdash; Vancouver</div>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Newsletter</a>
+    <a href="#">Press</a>
+    <a href="mailto:studio@tideandcurrent.ca">studio@tideandcurrent.ca</a>
+  </div>
+</footer>
+
+</body>
+</html>
